@@ -1,0 +1,48 @@
+{
+  "name": "scaffold-fis",
+  "version": "1.0.0",
+  "description": "脚手架，基于 FIS3 搭建。",
+  "scripts": {
+    "check": "gulp check",
+    "lint": "gulp lint",
+    "clean": "gulp clean",
+    "server": "gulp server --env=dev",
+    "build:dev": "gulp build --env=dev",
+    "build:test": "gulp build --env=test",
+    "build:prod": "gulp build --env=prod"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.weidai.work/liping/scaffold-fis"
+  },
+  "homepage": "http://git.weidai.work/liping/scaffold-fis",
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "del": "^2.2.2",
+    "eslint": "^3.16.0",
+    "fis-optimizer-htmlmin": "^0.1.2",
+    "fis-parser-babel-6.x": "^6.20.0",
+    "fis-parser-less-2.x": "^0.1.4",
+    "fis3": "^3.4.32",
+    "fis3-hook-commonjs": "^0.1.26",
+    "fis3-hook-node_modules": "^2.2.8",
+    "fis3-packager-deps-pack": "^0.1.2",
+    "fis3-postpackager-loader": "^2.1.4",
+    "fis3-postprocessor-autoprefixer": "^1.0.0",
+    "fis3-preprocessor-define": "^1.1.0",
+    "fis3-preprocessor-js-require-css": "^0.1.1",
+    "fis3-preprocessor-js-require-file": "^0.1.3",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-util": "^3.0.8",
+    "iconv-lite": "^0.4.15",
+    "open": "^0.0.5",
+    "shelljs": "^0.7.6",
+    "yargs": "^6.6.0"
+  },
+  "dependencies": {}
+}

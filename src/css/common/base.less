@@ -1,0 +1,128 @@
+@import "./util.less";
+
+/* 基础 start */
+
+html, body {
+  font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  margin: 0;
+  padding: 0;
+  color: @fontColorNormal;
+  background-color: @bgColorPage;
+  .fontSizeBig(@fontSizeM);
+  .lineHeightNormal(@lineHeightS);
+}
+
+button, input, textarea, select {
+  outline: 0;
+  border: 0;
+  &:focus {
+    outline: 0;
+    border: 0;
+  }
+}
+
+a {
+  text-decoration: none
+}
+
+ul {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+}
+
+
+/* 基础 end */
+
+
+/* 通用 start */
+
+.clear {
+  zoom: 1;
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+.hide {
+  display: none !important;
+}
+
+
+/* 通用 end */
+
+
+/* 布局 start */
+
+.layout-header {
+  display: none;
+}
+
+.layout-footer {
+  display: none;
+}
+
+.layout-body {}
+
+.layout-main {
+  position: relative;
+  width: 750px;
+  margin: 0 auto
+}
+
+
+/* 布局 end */
+
+
+/* 图标 start */
+
+.icon {
+}
+
+
+/* 图标 end */
+
+
+/* 通用 start */
+
+.common-notice {
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0;
+  color: @fontColorInvert;
+  background-color: @stateError;
+  z-index: @zIndexBase;
+  .fontSizeBigger(@fontSizeM);
+}
+
+.common-loading {
+  .mask {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.5;
+    background-color: #000;
+    z-index: @zIndexBase;
+  }
+  .container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 124px;
+    height: 124px;
+    margin-left: -62px;
+    background-image: url(../../img/loading.gif);
+    z-index: @zIndexBase;
+  }
+}
+
+/* 通用 end */
