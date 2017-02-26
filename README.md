@@ -31,6 +31,7 @@ npm run build:prod 构建项目（生产环境）。
 FIS3 的 fis3-hook-node_modules 插件，对 npm 的支持有限，不建议使用 node_modules 中安装的依赖。  
 表现为仅查找根路径（此项目配置为 /src 目录）内的 node_modules 目录，而不向上级目录和全局目录中查找依赖。  
 虽然可以将 /src 内文件放置于 / 中绕过该限制，但配置文件与业务源码混杂在一起，且实现不够友好，因此不建议使用。  
+另外，该插件似乎对 npm3 中使用链接进行扁平化处理依赖的方式，支持不佳。  
 
 对 ES6 和 ES7 的支持，虽然引入了 fis3-hook-commonjs 和 fis-parser-babel-6.x 可编译和模块化源文件。  
 但是由于 babel-plugin-transform-runtime 需要在编译过程中插入 require 语句 ，而由于以上原因，造成无法解析该依赖。  
