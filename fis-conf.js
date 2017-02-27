@@ -21,7 +21,7 @@ let assetPath = {
 
 // 编译参数
 let defineParam = {
-  '__wd_define_env__': JSON.stringify(currentEnv)
+  '__WD_DEFINE_ENV__': JSON.stringify(currentEnv)
 };
 
 // 依赖打包

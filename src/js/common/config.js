@@ -12,7 +12,7 @@ let envCfg = (function () {
   };
 
   /* eslint-disable */
-  let env = query.env ? query.env : __wd_define_env__;
+  let env = query.env ? query.env : __WD_DEFINE_ENV__;
   /* eslint-enable */
   switch (env) {
     case 'dev': {
