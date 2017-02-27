@@ -48,14 +48,6 @@ fis.match('*', {
   query: '', // url 后追加查询字符串
   useHash: true // 使用 MD5 文件名
 })
-  .match('::package', {
-    packager: fis.plugin('deps-pack', depsPack), // 依赖打包
-    postpackager: fis.plugin('loader', { // 分析处理页面依赖资源
-      obtainScript: false, // 忽略页面中已存在的脚本
-      obtainStyle: false, // 忽略页面中已存在的样式
-      useInlineMap: true // 在页面中输出 mod.js 异步依赖配置
-    })
-  })
   .match('{mock/**,html/part/**}', { // 模拟数据和 html 片段不发布
     release: false
   })
@@ -71,9 +63,6 @@ fis.match('*', {
       extends: path.join(__dirname, '.babelrc') // 配置文件路径
     }),
     preprocessor: [
-      fis.plugin('define', { // 替换字符串定义
-        defines: defineParam
-      }),
       fis.plugin('js-require-file', { // 解析文件引用
         useEmbedWhenSizeLessThan: 0 // 内联文件尺寸下限
       }),
@@ -87,6 +76,19 @@ fis.match('*', {
     parser: fis.plugin('less-2.x'), // 编译 less 文件
     postprocessor: fis.plugin('autoprefixer', { // 浏览器兼容处理
       browsers: ['Android >= 2.1', 'iOS >= 4', 'ie >= 8', 'firefox >= 15']
+    })
+  })
+  .match('::text', { // 检查全部文本文件
+    preprocessor: fis.plugin('define', { // 替换字符串定义
+      defines: defineParam
+    }, 'append')
+  })
+  .match('::package', {
+    packager: fis.plugin('deps-pack', depsPack), // 依赖打包
+    postpackager: fis.plugin('loader', { // 分析处理页面依赖资源
+      obtainScript: false, // 忽略页面中已存在的脚本
+      obtainStyle: false, // 忽略页面中已存在的样式
+      useInlineMap: true // 在页面中输出 mod.js 异步依赖配置
     })
   });
 
