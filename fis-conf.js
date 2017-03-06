@@ -44,14 +44,14 @@ let depsPack = {
 fis.hook('commonjs');
 
 // 共享环境配置
-fis.match('*', {
+fis.match('**', {
   query: '', // url 后追加查询字符串
   useHash: true // 使用 MD5 文件名
 })
   .match('{mock/**,html/part/**}', { // 模拟数据和 html 片段不发布
     release: false
   })
-  .match('*.html', { // html 文件不使用 MD5 文件名
+  .match('{lib/**,html/**.html}', { // 第三方库和 html 文件不使用 MD5 文件名
     useHash: false
   })
   .match('js/**.js', { // 使用 define 包装为 AMD 模块。
@@ -71,14 +71,14 @@ fis.match('*', {
       })
     ]
   })
-  .match('*.{css,less}', {
+  .match('css/**.{css,less}', { // 解析和兼容处理样式文件
     rExt: '.css',
     parser: fis.plugin('less-2.x'), // 编译 less 文件
     postprocessor: fis.plugin('autoprefixer', { // 浏览器兼容处理
       browsers: ['Android >= 2.1', 'iOS >= 4', 'ie >= 8', 'firefox >= 15']
     })
   })
-  .match('::text', { // 检查全部文本文件
+  .match('{js/**.js,html/**.html}', { // 替换文本文件
     preprocessor: fis.plugin('define', { // 替换字符串定义
       defines: defineParam
     }, 'append')
@@ -94,7 +94,7 @@ fis.match('*', {
 
 // 开发环境配置
 fis.media('dev')
-  .match('*', {
+  .match('**', {
     domain: assetPath.dev.domain,
     url: assetPath.dev.url,
     useHash: false
@@ -106,11 +106,11 @@ fis.media('dev')
 // 测试环境配置 和 生产环境配置
 ['test', 'prod'].forEach((env) => {
   fis.media(env)
-    .match('*', {
+    .match('**', {
       domain: assetPath[env].domain,
       url: assetPath[env].url
     })
-    .match('*.html', { // 压缩页面
+    .match('html/**.html', { // 压缩页面
       optimizer: fis.plugin('htmlmin', {
         ignoreCustomComments: [/^!/, /ignore/, /SCRIPT_PLACEHOLDER/, /STYLE_PLACEHOLDER/
           , /RESOURCEMAP_PLACEHOLDER/, /DEPENDENCIES_INJECT_PLACEHOLDER/], // 忽略 fis3-postpackager-loader 占位符
@@ -121,17 +121,17 @@ fis.media('dev')
         minifyCSS: true
       })
     })
-    .match('*.js', { // 压缩脚本
+    .match('js/**.js', { // 压缩脚本
       optimizer: fis.plugin('uglify-js', {
         sourceMap: true
       })
     })
-    .match('*.{css,less}', { // 压缩样式
+    .match('css/**.{css,less}', { // 压缩样式
       optimizer: fis.plugin('clean-css', {
         keepBreaks: true
       })
     })
-    .match('*.png', { // 压缩PNG
+    .match('img/**.png', { // 压缩PNG
       optimizer: fis.plugin('png-compressor', {
         type: 'pngquant'
       })

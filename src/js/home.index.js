@@ -2,9 +2,6 @@ let util = require('./common/util');
 let helper = require('./common/helper');
 let config = require('./common/config');
 
-let $ = window.$;
-let WDLoginModel = window.WDLoginModel;
-
 setTimeout(function () {
   helper.ajax({
     type: 'POST',

@@ -1,6 +1,6 @@
 let util = {};
 
-//解析URL查询参数
+// 解析URL查询参数
 util.parseQueryString = function () {
   let query = {};
   let search = window.location.search;
@@ -23,7 +23,7 @@ util.parseQueryString = function () {
   return query;
 };
 
-//拼接URL查询参数
+// 拼接URL查询参数
 util.joinQueryString = function (query) {
   let search = '?';
 
@@ -42,7 +42,7 @@ util.joinQueryString = function (query) {
   return search;
 };
 
-//解析hash查询参数
+// 解析hash查询参数
 util.parseHashString = function () {
   let query = {};
   let hash = window.location.hash;
@@ -65,7 +65,7 @@ util.parseHashString = function () {
   return query;
 };
 
-//拼接hash查询参数
+// 拼接hash查询参数
 util.joinHashString = function (query) {
   let hash = '#';
 
@@ -81,7 +81,7 @@ util.joinHashString = function (query) {
   return hash;
 };
 
-//解析URL
+// 解析URL
 util.parseUrl = function (url) {
   let a = document.createElement('a');
   a.href = url;
@@ -121,7 +121,7 @@ util.parseUrl = function (url) {
   };
 };
 
-//检查指定URL是否同域
+// 检查指定URL是否同域
 util.isEqOrigin = function (url) {
   let remote = util.parseUrl(url);
   let local = window.location;
@@ -129,7 +129,7 @@ util.isEqOrigin = function (url) {
   return remote.origin.toLowerCase() == local.origin.toLowerCase();
 };
 
-//安全过滤
+// 安全过滤
 util.safetyFilter = function (unsafeString) {
   if (unsafeString) {
     let text = document.createTextNode(unsafeString);
@@ -141,7 +141,7 @@ util.safetyFilter = function (unsafeString) {
   return unsafeString;
 };
 
-//替换br为CRLF
+// 替换br为CRLF
 util.brToCrlf = function (brString) {
   let reg = /<\s*br\s*\/?\s*>/ig;
 
@@ -152,7 +152,7 @@ util.brToCrlf = function (brString) {
   return brString;
 };
 
-//替换CRLF为br
+// 替换CRLF为br
 util.crlfToBr = function (crlfString) {
   let reg = /(\r\n)|(\n)/g;
 
@@ -163,7 +163,7 @@ util.crlfToBr = function (crlfString) {
   return crlfString;
 };
 
-//检验身份证号码
+// 检验身份证号码
 util.isIDNo = function (cid) {
   let arrExp = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
   let arrValid = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
@@ -186,13 +186,13 @@ util.isIDNo = function (cid) {
   }
 };
 
-//检验手机号
+// 检验手机号
 util.isMobile = function (mobile) {
   let reg = /^1\d{10}$/;
   return reg.test(mobile);
 };
 
-//检验银行卡号
+// 检验银行卡号
 util.isBankCard = function (cardId) {
   let reg = /^\d{16,}$/;
   return reg.test(cardId);
@@ -207,7 +207,7 @@ util.maskMobile = function (mobile) {
   return mobile;
 };
 
-//字符串格式化
+// 字符串格式化
 util.stringFormat = function (format, args) {
   let result = format;
   if (arguments.length > 1) {
@@ -231,7 +231,7 @@ util.stringFormat = function (format, args) {
   return result;
 };
 
-//毫秒转换为 yyyy-MM-dd HH:mm:ss
+// 毫秒转换为 yyyy-MM-dd HH:mm:ss
 util.msecToString = function (timestamp, format) {
   let ret = '';
 
@@ -265,7 +265,7 @@ util.msecToString = function (timestamp, format) {
   return ret;
 };
 
-//yyyy-MM-dd HH:mm:ss 转换为Date
+// yyyy-MM-dd HH:mm:ss 转换为Date
 util.stringToDate = function (dateString) {
   let ret = undefined;
 
@@ -289,7 +289,7 @@ util.stringToDate = function (dateString) {
   return ret;
 };
 
-//千分位分割数字（保留len位小数）
+// 千分位分割数字（保留len位小数）
 util.thousandSeparator = function (number, len) {
   let strNum = '';
   let decLen = 0;
@@ -341,7 +341,7 @@ util.thousandSeparator = function (number, len) {
   return number;
 };
 
-//过滤字符串中特殊字符，避免破坏JSON结构。
+// 过滤字符串中特殊字符，避免破坏JSON结构。
 util.stringJsonFilter = function (source, hideCode) {
   /*
     * 参考资料：
@@ -383,13 +383,34 @@ util.stringJsonFilter = function (source, hideCode) {
   }
 };
 
-//猜测入口页面所在路径
+// 猜测入口页面所在路径
 util.guessEntryDir = function () {
   //注意：对此类型url无效。http://example.com/index.html/a/b/c
   let href = window.location.href;
   let dir = href.substring(0, href.lastIndexOf('/') + 1);
 
   return dir;
+};
+
+// 检查属性调用链，链中任何一层为 undefined 就立即返回。
+util.inspectUndefined = function (parentObj, keys) {
+  if (typeof (keys) === 'string') {
+    let keyArr = keys.split('.');
+    for (let i = 0; i < keyArr.length; i++) {
+      let key = keyArr[i];
+      let property = parentObj[key];
+      if (typeof (property) === 'undefined') {
+        return undefined;
+      }
+      else {
+        parentObj = property;
+      }
+    }
+    return parentObj;
+  }
+  else {
+    return keys;
+  }
 };
 
 module.exports = util;

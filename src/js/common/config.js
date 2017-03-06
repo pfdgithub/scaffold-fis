@@ -1,9 +1,11 @@
 // 辅助函数
 let util = require('./util');
 
+// 查询参数
+let query = util.parseQueryString();
+
 // 环境配置
 let envCfg = (function () {
-  let query = util.parseQueryString();
   let config = {
     entryDir: util.guessEntryDir(),
     origin: '//activity.weidai.com.cn/',
@@ -35,11 +37,6 @@ let envCfg = (function () {
 // 地址集合
 let uriHub = {
   rpc: {
-    isLogin: envCfg.origin + 'login/isLogin.json',
-    logout: envCfg.origin + 'login/logout.json',
-    checkMobile: envCfg.origin + 'login/checkMobile.json',
-    mobileLogin: envCfg.origin + 'login/mobileLogin.json',
-
     dynamic: envCfg.origin + 'test/dynamic.json',
     static: envCfg.origin + 'test/static.json'
   },
