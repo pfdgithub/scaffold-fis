@@ -1,4 +1,15 @@
 <!-- foot start -->
+<script>
+  // 加载调试面板
+  (function() {
+    var src = __uri('../../lib/vconsole/vconsole-2.5.2.min.js');
+    var keyword = 'vConsole';
+    var search = window.location.search;
+    if(search.indexOf(keyword) != -1) {
+      document.write('<sc' + 'ript src="' + src + '"></sc' + 'ript>');
+    }
+  })();
+</script>
 <script type="text/javascript" src="../../lib/zepto/zepto-1.2.0.min.js"></script>
 <script type="text/javascript" src="../../lib/vue/vue-2.2.0.min.js"></script>
 
