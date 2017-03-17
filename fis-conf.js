@@ -10,7 +10,7 @@ let assetPath = {
     url: '$0'
   },
   test: {
-    domain: '//static.wdai.com',
+    domain: '//static1.wdai.com',
     url: '/static/fed/group/project$0'
   },
   prod: {
