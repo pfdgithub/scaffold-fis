@@ -29,14 +29,14 @@ let depsPack = {
   useTrack: false, // 将合并前的文件路径写入注释中
   useSourceMap: true, // 开启 souremap 功能
   'pkg/common.js': [ // 公共脚本
-    'js/common/**.js',
-    'js/common/**.js:deps'
+    '/js/common/**.js',
+    '/js/common/**.js:deps'
   ],
   'pkg/common.css': [ // 公共样式
-    'css/common/**.css',
-    'css/common/**.css:deps',
-    'css/common/**.less',
-    'css/common/**.less:deps'
+    '/css/common/**.css',
+    '/css/common/**.css:deps',
+    '/css/common/**.less',
+    '/css/common/**.less:deps'
   ]
 };
 
@@ -48,13 +48,13 @@ fis.match('**', {
   query: '', // url 后追加查询字符串
   useHash: true // 使用 MD5 文件名
 })
-  .match('{mock/**,html/part/**}', { // 模拟数据和 html 片段不发布
+  .match('{/mock/**,/html/part/**}', { // 模拟数据和 html 片段不发布
     release: false
   })
-  .match('{lib/**,html/**.html}', { // 第三方库和 html 文件不使用 MD5 文件名
+  .match('{/lib/**,/html/**.html}', { // 第三方库和 html 文件不使用 MD5 文件名
     useHash: false
   })
-  .match('js/**.js', { // 使用 define 包装为 AMD 模块。
+  .match('/js/**.js', { // 使用 define 包装为 AMD 模块。
     rExt: 'js',
     isMod: true,
     parser: fis.plugin('babel-6.x', { // 解析 ES 语法
@@ -71,14 +71,14 @@ fis.match('**', {
       })
     ]
   })
-  .match('css/**.{css,less}', { // 解析和兼容处理样式文件
+  .match('/css/**.{css,less}', { // 解析和兼容处理样式文件
     rExt: '.css',
     parser: fis.plugin('less-2.x'), // 编译 less 文件
     postprocessor: fis.plugin('autoprefixer', { // 浏览器兼容处理
       browsers: ['Android >= 2.1', 'iOS >= 4', 'ie >= 8', 'firefox >= 15']
     })
   })
-  .match('{js/**.js,html/**.html}', { // 替换文本文件
+  .match('{/js/**.js,/html/**.html}', { // 替换文本文件
     preprocessor: fis.plugin('define', { // 替换字符串定义
       defines: defineParam
     }, 'append')
@@ -99,7 +99,7 @@ fis.media('dev')
     url: assetPath.dev.url,
     useHash: false
   })
-  .match('mock/**', { // 发布模拟数据
+  .match('/mock/**', { // 发布模拟数据
     release: true
   });
 
@@ -110,7 +110,7 @@ fis.media('dev')
       domain: assetPath[env].domain,
       url: assetPath[env].url
     })
-    .match('html/**.html', { // 压缩页面
+    .match('/html/**.html', { // 压缩页面
       optimizer: fis.plugin('htmlmin', {
         ignoreCustomComments: [/^!/, /ignore/, /SCRIPT_PLACEHOLDER/, /STYLE_PLACEHOLDER/
           , /RESOURCEMAP_PLACEHOLDER/, /DEPENDENCIES_INJECT_PLACEHOLDER/], // 忽略 fis3-postpackager-loader 占位符
@@ -121,17 +121,17 @@ fis.media('dev')
         minifyCSS: true
       })
     })
-    .match('js/**.js', { // 压缩脚本
+    .match('/js/**.js', { // 压缩脚本
       optimizer: fis.plugin('uglify-js', {
         sourceMap: true
       })
     })
-    .match('css/**.{css,less}', { // 压缩样式
+    .match('/css/**.{css,less}', { // 压缩样式
       optimizer: fis.plugin('clean-css', {
         keepBreaks: true
       })
     })
-    .match('img/**.png', { // 压缩PNG
+    .match('/img/**.png', { // 压缩PNG
       optimizer: fis.plugin('png-compressor', {
         type: 'pngquant'
       })
