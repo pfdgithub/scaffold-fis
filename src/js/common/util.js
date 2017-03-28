@@ -399,7 +399,7 @@ util.inspectUndefined = function (parentObj, keys) {
     for (let i = 0; i < keyArr.length; i++) {
       let key = keyArr[i];
       let property = parentObj[key];
-      if (typeof (property) === 'undefined') {
+      if (typeof (property) === 'undefined' || property === null) {
         return undefined;
       }
       else {
