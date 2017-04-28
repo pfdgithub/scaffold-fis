@@ -6,10 +6,10 @@ html, body {
   font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   margin: 0;
   padding: 0;
+  font-size: 26px;
   color: @fontColorNormal;
+  line-height: @lineHeightNormal;
   background-color: @bgColorPage;
-  .fontSizeBig(@fontSizeM);
-  .lineHeightNormal(@lineHeightS);
 }
 
 button, input, textarea, select {
@@ -41,15 +41,7 @@ ul {
 }
 
 .clear {
-  zoom: 1;
-  &:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
-  }
+  .clear();
 }
 
 .hide {
@@ -99,10 +91,10 @@ ul {
   left: 0;
   width: 100%;
   padding: 10px 0;
+  font-size: 28px;
   color: @fontColorInvert;
   background-color: @stateError;
   z-index: @zIndexBase;
-  .fontSizeBigger(@fontSizeM);
 }
 
 .common-loading {

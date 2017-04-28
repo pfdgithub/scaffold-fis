@@ -192,6 +192,12 @@ util.isMobile = function (mobile) {
   return reg.test(mobile);
 };
 
+// 检验邮箱
+util.isMobile = function (email) {
+  let reg = /^[\.\w-]+@[\w-]+(\.[\w-]+)+$/;
+  return reg.test(email);
+};
+
 // 检验银行卡号
 util.isBankCard = function (cardId) {
   let reg = /^\d{16,}$/;

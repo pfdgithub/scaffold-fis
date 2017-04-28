@@ -1,23 +1,22 @@
-// 基准 z-index
-@zIndexBase: 1;
-
 // 背景颜色 - 页面
 @bgColorPage: #f8f8f8;
 // 背景颜色 - 标准
 @bgColorNormal: #ffffff;
-// 背景颜色 - 反色
-@bgColorInvert: #000000;
 
+// 字体颜色 - 反色
+@fontColorInvert: #ffffff;
 // 字体颜色 - 加重
 @fontColorWeight: #333333;
 // 字体颜色 - 标准
 @fontColorNormal: #666666;
 // 字体颜色 - 减轻
 @fontColorLight: #999999;
-// 字体颜色 - 提示
-@fontColorTips: #60b4fe;
-// 字体颜色 - 反色
-@fontColorInvert: #ffffff;
+
+// 行高 - 标准
+@lineHeightNormal: 1;
+
+// 基准 z-index
+@zIndexBase: 1;
 
 // 状态 - 信息
 @stateInfo: #10AEFF;
@@ -28,79 +27,32 @@
 // 状态 - 错误
 @stateError: #F43530;
 
-// 字体尺寸基准 - S号
-@fontSizeS: 12px;
-// 字体尺寸基准 - M号
-@fontSizeM: 24px;
-// 字体尺寸基准 - L号
-@fontSizeL: 36px;
-// 字体尺寸基准 - XL号
-@fontSizeXL: 48px;
-// 字体尺寸基准 - XXL号
-@fontSizeXXL: 60px;
-
-// 字体尺寸偏移 - 加6
-.fontSizeBiggest(@size) {
-  font-size: @size + 6;
-}
-// 字体尺寸偏移 - 加4
-.fontSizeBigger(@size) {
-  font-size: @size + 4;
-}
-// 字体尺寸偏移 - 加2
-.fontSizeBig(@size) {
-  font-size: @size + 2;
-}
-// 字体尺寸偏移 - 标准
-.fontSizeNormal(@size) {
-  font-size: @size;
-}
-// 字体尺寸偏移 - 减2
-.fontSizeSmall(@size) {
-  font-size: @size - 2;
-}
-// 字体尺寸偏移 - 减4
-.fontSizeMini(@size) {
-  font-size: @size - 4;
-}
-// 字体尺寸偏移 - 减6
-.fontSizeMicro(@size) {
-  font-size: @size - 6;
+// 清除浮动
+.clear() {
+  zoom: 1;
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
 }
 
-// 行高基准 - S号
-@lineHeightS: 1;
-// 行高基准 - M号
-@lineHeightM: 1.5;
-// 行高基准 - L号
-@lineHeightL: 2;
-
-// 行高偏移 - 加0.4
-.lineHeightBigger(@size) {
-  line-height: @size + 0.4;
-}
-// 行高偏移 - 加0.2
-.lineHeightBig(@size) {
-  line-height: @size + 0.2;
-}
-// 行高偏移 - 标准
-.lineHeightNormal(@size) {
-  line-height: @size;
-}
-// 行高偏移 - 减0.2
-.lineHeightSmall(@size) {
-  line-height: @size - 0.2;
-}
-// 行高偏移 - 减0.4
-.lineHeightMini(@size) {
-  line-height: @size - 0.4;
-}
-
-// 超出截断
+// 单行超出截断
 .ellipsis() {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+// 多行超出截断
+.ellipsis(@line) when (isnumber(@line)) and (@line > 1) {
+  overflow: hidden;
+  display: -webkit-inline-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @line;
 }
 
 // 图标
