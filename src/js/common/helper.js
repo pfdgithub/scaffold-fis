@@ -188,4 +188,4 @@ helper.wxShareConfig = function (share) {
   });
 };
 
-module.exports = helper;
+export default helper;

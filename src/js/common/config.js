@@ -1,5 +1,5 @@
 // 辅助函数
-let util = require('./util');
+import util from './util';
 
 // 查询参数
 let query = util.parseQueryString();
@@ -44,7 +44,7 @@ let uriHub = {
   }
 };
 
-module.exports = {
+export default {
   envCfg: envCfg,
   uriHub: uriHub
 };

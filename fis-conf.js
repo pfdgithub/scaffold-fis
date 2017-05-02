@@ -40,8 +40,13 @@ let depsPack = {
   ]
 };
 
+// 增加 vue 文本文件类型
+fis.set('project.fileType.text', 'vue');
+
 // 使用 CommonJs 模块化方案，配合 mod.js 加载器。
-fis.hook('commonjs');
+fis.hook('commonjs', {
+  extList: ['.js', '.vue']
+});
 
 // 共享环境配置
 fis.match('**', {
@@ -54,9 +59,19 @@ fis.match('**', {
   .match('{/lib/**,/html/**.html}', { // 第三方库和 html 文件不使用 MD5 文件名
     useHash: false
   })
-  .match('/js/**.js', { // 使用 define 包装为 AMD 模块。
+  .match('/component/**.vue', { // 解析 vue 单文件组件——基础
+    rExt: '.js',
+    isMod: true, // 使用 define 包装为 AMD 模块。
+    useSameNameRequire: true, // 同名引用
+    parser: fis.plugin('vue-component', { // 解析 vue 单文件组件
+      runtimeOnly: true, // template 在构建时转为 render 方法
+      extractCSS: false // 内联样式
+    })
+  })
+  .match('{/js/**.js,/component/**.vue:js}', { // 处理脚本文件
     rExt: 'js',
-    isMod: true,
+    isMod: true, // 使用 define 包装为 AMD 模块。
+    useSameNameRequire: true, // 同名引用
     parser: fis.plugin('babel-6.x', { // 解析 ES 语法
       presets: [], // 禁用插件自带配置
       babelrc: true, // 使用自定义配置
@@ -71,17 +86,15 @@ fis.match('**', {
       })
     ]
   })
-  .match('/css/**.{css,less}', { // 解析和兼容处理样式文件
+  .match('{/css/**.css,/css/**.less,/component/**.vue:less}', { // 处理样式文件
     rExt: '.css',
     parser: fis.plugin('less-2.x'), // 编译 less 文件
-    postprocessor: fis.plugin('autoprefixer', { // 浏览器兼容处理
-      browsers: ['Android >= 2.1', 'iOS >= 4', 'ie >= 8', 'firefox >= 15']
-    })
+    postprocessor: fis.plugin('autoprefixer') // 浏览器兼容处理
   })
   .match('{/js/**.js,/html/**.html}', { // 替换文本文件
     preprocessor: fis.plugin('define', { // 替换字符串定义
       defines: defineParam
-    }, 'append')
+    }, 'prepend')
   })
   .match('::package', {
     packager: fis.plugin('deps-pack', depsPack), // 依赖打包
@@ -121,19 +134,14 @@ fis.media('dev')
         minifyCSS: true
       })
     })
-    .match('/js/**.js', { // 压缩脚本
+    .match('{/js/**.js,/component/**.vue}', { // 压缩脚本
       optimizer: fis.plugin('uglify-js', {
         sourceMap: true
       })
     })
-    .match('/css/**.{css,less}', { // 压缩样式
+    .match('{/css/**.css,/css/**.less}', { // 压缩样式
       optimizer: fis.plugin('clean-css', {
         keepBreaks: true
-      })
-    })
-    .match('/img/**.png', { // 压缩PNG
-      optimizer: fis.plugin('png-compressor', {
-        type: 'pngquant'
       })
     });
 });

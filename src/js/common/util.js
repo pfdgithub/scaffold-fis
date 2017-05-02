@@ -419,4 +419,4 @@ util.inspectUndefined = function (parentObj, keys) {
   }
 };
 
-module.exports = util;
+export default util;
