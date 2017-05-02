@@ -11,11 +11,11 @@ let assetPath = {
   },
   test: {
     domain: '//static1.wdai.com',
-    url: '/static/fed/group/project$0'
+    url: '/static/fed/[group]/[project]$0'
   },
   prod: {
     domain: '//static1.weidai.com.cn',
-    url: '/static/fed/group/project$0'
+    url: '/static/fed/[group]/[project]$0'
   }
 };
 
