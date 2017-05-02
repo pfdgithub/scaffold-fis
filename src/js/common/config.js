@@ -38,7 +38,13 @@ let envCfg = (function () {
 let uriHub = {
   rpc: {
     dynamic: envCfg.origin + 'test/dynamic.json',
-    static: envCfg.origin + 'test/static.json'
+    static: envCfg.origin + 'test/static.json',
+
+    getShareCfg: envCfg.origin + "share/getShareCfg.json",
+    isLogin: envCfg.origin + 'login/isLogin.json',
+    logout: envCfg.origin + 'login/logout.json',
+    checkMobile: envCfg.origin + 'login/checkMobile.json',
+    mobileLogin: envCfg.origin + 'login/mobileLogin.json'
   },
   link: { //外部链接
   }

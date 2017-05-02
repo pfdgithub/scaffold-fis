@@ -1,0 +1,19 @@
+{
+  "isError": null,
+  "errorCode": null,
+  "success": true,
+  "isException": null,
+  "exName": null,
+  "exDetails": null,
+  "message": "成功！",
+  "roots": null,
+  "data": {
+    "timestamp": 1483699654,
+    "nonce": "5325d1c4f62e1455c743f49fc0bfbfe4",
+    "appid": "wx1dca7ca6eef83fd6",
+    "signature": "d41bc3ed6fa70e3418ca6b73a7fbfa4bacf92213"
+  },
+  "flag": true,
+  "isSessionOut": null,
+  "metaData": null
+}
