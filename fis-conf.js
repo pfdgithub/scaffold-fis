@@ -68,7 +68,7 @@ fis.match('**', {
       extractCSS: false // 内联样式
     })
   })
-  .match('{/js/**.js,/component/**.vue:js}', { // 处理脚本文件
+  .match('{/js/**.js,/component/**.js,/component/**.vue:js}', { // 处理脚本文件
     rExt: 'js',
     isMod: true, // 使用 define 包装为 AMD 模块。
     useSameNameRequire: true, // 同名引用

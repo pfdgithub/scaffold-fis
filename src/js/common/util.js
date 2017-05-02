@@ -193,7 +193,7 @@ util.isMobile = function (mobile) {
 };
 
 // 检验邮箱
-util.isMobile = function (email) {
+util.isEmail = function (email) {
   let reg = /^[\.\w-]+@[\w-]+(\.[\w-]+)+$/;
   return reg.test(email);
 };
