@@ -38,7 +38,7 @@
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "gulp-util": "^3.0.8",
-    "iconv-lite": "^0.4.16",
+    "iconv-lite": "^0.4.17",
     "open": "^0.0.5",
     "shelljs": "^0.7.7",
     "yargs": "^7.1.0"
