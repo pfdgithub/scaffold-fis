@@ -1,19 +1,22 @@
-import dialog from './dialog';
+import app from './app';
 
 let Vue = window.Vue;
-Vue.config.devtools = true;
 
 // 单例
 let _app = null;
 
 // 初始化
-let init = (props) => { // 初始化
+let init = (selector, props) => { // 初始化
+  if (!selector) {
+    selector = document.createElement('div');
+    document.body.appendChild(selector);
+  }
+
   if (_app === null) {
-    let Comp = Vue.extend(dialog);
+    let Comp = Vue.extend(app);
     _app = new Comp({
       propsData: props
-    }).$mount();
-    document.body.appendChild(_app.$el);
+    }).$mount(selector);
   }
 };
 
@@ -26,7 +29,18 @@ let destroy = () => {
   }
 };
 
+// 更新数据
+let updateData = (data) => {
+  if (_app && data) {
+    for (let key in data) {
+      let val = data[key];
+      Vue.set(_app.$data, key, val);
+    }
+  }
+};
+
 export default {
   init,
-  destroy
+  destroy,
+  updateData
 };

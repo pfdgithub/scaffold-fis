@@ -2,7 +2,7 @@
   <div class="dialog" v-bind:style="{zIndex: zIndex}">
     <div class="mask" v-bind:style="{zIndex: zIndex}"></div>
     <div class="container" v-bind:style="{zIndex: zIndex}">
-      <div class="close" v-on:click="this.closeDialog"></div>
+      <div class="close" v-on:click="closeDialog"></div>
       <div class="title"></div>
       <div class="content">
         <div class="username" v-if="step == 1">
@@ -16,8 +16,8 @@
         <div class="error">
           {{errorMsg}}
         </div>
-        <input type="button" class="next" value="下一步" v-if="step == 1" v-on:click="this.checkUsername">
-        <input type="button" class="login" value="登录" v-if="step == 2" v-on:click="this.checkPassword">
+        <input type="button" class="next" value="下一步" v-if="step == 1" v-on:click="checkUsername">
+        <input type="button" class="login" value="登录" v-if="step == 2" v-on:click="checkPassword">
       </div>
     </div>
   </div>
@@ -26,7 +26,7 @@
 <script>
 export default {
   props: {
-    zIndex: {
+    defaultZIndex: {
       type: Number,
       default: 1
     },
@@ -36,7 +36,7 @@ export default {
   },
   data: function () {
     return {
-      zIndex: this.$props.zIndex,
+      zIndex: this.defaultZIndex,
       step: 1,
       username: '',
       password: '',
@@ -45,33 +45,33 @@ export default {
   },
   methods: {
     closeDialog: function () {
-      this.$props.destroyCb && this.$props.destroyCb();
+      this.destroyCb && this.destroyCb();
     },
     checkUsername: function () {
-      this.$props.checkCb && this.$props.checkCb(
-        this.$data.username,
+      this.checkCb && this.checkCb(
+        this.username,
         (errorMsg) => {
           if (errorMsg) {
-            this.$data.errorMsg = errorMsg;
+            this.errorMsg = errorMsg;
           }
           else {
-            this.$data.errorMsg = '';
-            this.$data.step = 2;
+            this.errorMsg = '';
+            this.step = 2;
           }
         }
       );
     },
     checkPassword: function () {
-      this.$props.loginCb && this.$props.loginCb(
-        this.$data.username,
-        this.$data.password,
+      this.loginCb && this.loginCb(
+        this.username,
+        this.password,
         (errorMsg) => {
           if (errorMsg) {
-            this.$data.errorMsg = errorMsg;
+            this.errorMsg = errorMsg;
           }
           else {
-            this.$data.errorMsg = '';
-            this.$props.destroyCb && this.$props.destroyCb();
+            this.errorMsg = '';
+            this.destroyCb && this.destroyCb();
           }
         }
       );
@@ -85,16 +85,18 @@ export default {
   .mask {
     position: fixed;
     top: 0;
+    bottom: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.5;
-    background-color: #000;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
   }
   .container {
     position: fixed;
     top: 15%;
     left: 50%;
+    z-index: 2;
+
     width: 650px;
     margin-left: -345px;
     padding: 20px;
@@ -108,7 +110,7 @@ export default {
       height: 36px;
       cursor: pointer;
       background-repeat: no-repeat;
-      background-image: url('./img/close.png?__inline');
+      background-image: url('./assets/close.png?__inline');
     }
     .title {
       height: 70px;
@@ -117,7 +119,7 @@ export default {
       background-repeat: no-repeat;
       background-position: center;
       background-clip: content-box;
-      background-image: url('./img/logo.png?__inline');
+      background-image: url('./assets/logo.png?__inline');
     }
     .content {
       padding: 10px 0px;
@@ -147,12 +149,12 @@ export default {
       }
       .username {
         .icon {
-          background-image: url('./img/username.png?__inline');
+          background-image: url('./assets/username.png?__inline');
         }
       }
       .password {
         .icon {
-          background-image: url('./img/password.png?__inline');
+          background-image: url('./assets/password.png?__inline');
         }
       }
       .error {
