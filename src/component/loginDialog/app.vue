@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog" v-bind:style="{zIndex: zIndex}">
+  <div class="loginDialog" v-bind:style="{zIndex: zIndex}">
     <div class="mask" v-bind:style="{zIndex: zIndex}"></div>
     <div class="container" v-bind:style="{zIndex: zIndex}">
       <div class="close" v-on:click="closeDialog"></div>
@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.dialog {
+.loginDialog {
   .mask {
     position: fixed;
     top: 0;
