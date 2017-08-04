@@ -17,6 +17,7 @@ helper.ajax = function (config) {
     xhrFields: {
       withCredentials: true
     },
+    headers: config.headers,
     data: config.data,
     success: function (data, textStatus, jqXHR) {
       if (data && data.code == 0) {
@@ -72,9 +73,15 @@ helper.ajax = function (config) {
 };
 
 // 显示通知
+helper._customNotice = undefined;
 helper._noticeTimeoutId = 0;
 helper.showNotice = function (msg) {
   let _this = this;
+
+  if (_this._customNotice) {
+    _this._customNotice(msg);
+    return;
+  }
 
   let notice = $('.j-common-notice');
   notice.text(msg);
@@ -100,7 +107,7 @@ helper.showLoading = function (show) {
 };
 
 //微信配置
-helper.wxConfig = function (share, cb) {
+helper.wxConfig = function (share, successCb, errorCb) {
   let _this = this;
 
   if (share) {
@@ -111,7 +118,7 @@ helper.wxConfig = function (share, cb) {
       dataType: 'json',
       url: share.url,
       data: {
-        currentUrl: location.href
+        currentUrl: location.href.split('#')[0]
       },
       success: function (data/*, textStatus, jqXHR*/) {
         if (data && data.flag) {
@@ -130,9 +137,13 @@ helper.wxConfig = function (share, cb) {
               'onMenuShareQZone'
             ]
           });
-          //验证结束
+          //验证成功
           wx.ready(function () {
-            cb && cb();
+            successCb && successCb();
+          });
+          //验证失败
+          wx.error(function (res) {
+            errorCb && errorCb(res);
           });
         }
         else {
@@ -160,7 +171,7 @@ helper.wxConfig = function (share, cb) {
 };
 
 //微信分享配置  
-helper.wxShareConfig = function (share) {
+helper.wxShareConfig = function (share, cbObj) {
   this.wxConfig(share, function () {
     //分享文案
     let shareData = {
@@ -168,14 +179,20 @@ helper.wxShareConfig = function (share) {
       imgUrl: share.imgUrl,
       title: share.title,
       desc: share.desc,
-      success: function (/*res*/) {
+      success: function (res) { // 接口调用成功时执行的回调函数。
+        cbObj.success && cbObj.success(res);
       },
-      cancel: function (/*res*/) {
+      fail: function (res) { // 接口调用失败时执行的回调函数。
+        cbObj.fail && cbObj.fail(res);
       },
-      fail: function (res) {
-        /* eslint-disable */
-        console.log(res);
-        /* eslint-enable */
+      complete: function (res) { // 接口调用完成时执行的回调函数，无论成功或失败都会执行。
+        cbObj.complete && cbObj.complete(res);
+      },
+      cancel: function (res) { // 用户点击取消时的回调函数，仅部分有用户取消操作的api才会用到。
+        cbObj.cancel && cbObj.cancel(res);
+      },
+      trigger: function (res) { // 监听Menu中的按钮点击时触发的方法，该方法仅支持Menu中的相关接口。
+        cbObj.trigger && cbObj.trigger(res);
       }
     };
 
