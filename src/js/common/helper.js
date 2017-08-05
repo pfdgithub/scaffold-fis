@@ -106,11 +106,11 @@ helper.showLoading = function (show) {
   }
 };
 
-//微信配置
+// 微信配置
 helper.wxConfig = function (share, successCb, errorCb) {
   let _this = this;
 
-  if (share) {
+  if (wx && share) {
     $.ajax({
       async: true,
       cache: false,
@@ -144,6 +144,9 @@ helper.wxConfig = function (share, successCb, errorCb) {
           //验证失败
           wx.error(function (res) {
             errorCb && errorCb(res);
+            /* eslint-disable */
+            console.error(res);
+            /* eslint-enable */
           });
         }
         else {
@@ -170,39 +173,43 @@ helper.wxConfig = function (share, successCb, errorCb) {
   }
 };
 
-//微信分享配置  
+// 微信分享配置
 helper.wxShareConfig = function (share, cbObj) {
-  this.wxConfig(share, function () {
-    //分享文案
-    let shareData = {
-      link: share.link,
-      imgUrl: share.imgUrl,
-      title: share.title,
-      desc: share.desc,
-      success: function (res) { // 接口调用成功时执行的回调函数。
-        cbObj.success && cbObj.success(res);
-      },
-      fail: function (res) { // 接口调用失败时执行的回调函数。
-        cbObj.fail && cbObj.fail(res);
-      },
-      complete: function (res) { // 接口调用完成时执行的回调函数，无论成功或失败都会执行。
-        cbObj.complete && cbObj.complete(res);
-      },
-      cancel: function (res) { // 用户点击取消时的回调函数，仅部分有用户取消操作的api才会用到。
-        cbObj.cancel && cbObj.cancel(res);
-      },
-      trigger: function (res) { // 监听Menu中的按钮点击时触发的方法，该方法仅支持Menu中的相关接口。
-        cbObj.trigger && cbObj.trigger(res);
-      }
-    };
+  cbObj = cbObj ? cbObj : {};
 
-    //调用API
-    wx.onMenuShareTimeline(shareData); //分享到朋友圈
-    wx.onMenuShareAppMessage(shareData); //分享给朋友
-    wx.onMenuShareQQ(shareData); //分享到QQ
-    wx.onMenuShareWeibo(shareData); //分享到微博
-    wx.onMenuShareQZone(shareData); //分享到QZonex
-  });
+  if (wx && share) {
+    this.wxConfig(share, function () {
+      //分享文案
+      let shareData = {
+        link: share.link,
+        imgUrl: share.imgUrl,
+        title: share.title,
+        desc: share.desc,
+        success: function (res) { // 接口调用成功时执行的回调函数。
+          cbObj.success && cbObj.success(res);
+        },
+        fail: function (res) { // 接口调用失败时执行的回调函数。
+          cbObj.fail && cbObj.fail(res);
+        },
+        complete: function (res) { // 接口调用完成时执行的回调函数，无论成功或失败都会执行。
+          cbObj.complete && cbObj.complete(res);
+        },
+        cancel: function (res) { // 用户点击取消时的回调函数，仅部分有用户取消操作的api才会用到。
+          cbObj.cancel && cbObj.cancel(res);
+        },
+        trigger: function (res) { // 监听Menu中的按钮点击时触发的方法，该方法仅支持Menu中的相关接口。
+          cbObj.trigger && cbObj.trigger(res);
+        }
+      };
+
+      //调用API
+      wx.onMenuShareTimeline(shareData); //分享到朋友圈
+      wx.onMenuShareAppMessage(shareData); //分享给朋友
+      wx.onMenuShareQQ(shareData); //分享到QQ
+      wx.onMenuShareWeibo(shareData); //分享到微博
+      wx.onMenuShareQZone(shareData); //分享到QZonex
+    });
+  }
 };
 
 export default helper;
