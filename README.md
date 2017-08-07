@@ -36,3 +36,4 @@ FIS3 的 fis3-hook-node_modules 插件，对 npm 的支持有限，不建议使�
 对 ES6 和 ES7 的支持，虽然引入了 fis3-hook-commonjs 和 fis-parser-babel-6.x 可编译和模块化源文件。  
 但是由于 babel-plugin-transform-runtime 需要在编译过程中插入 require 语句 ，而由于以上原因，造成无法解析该依赖。  
 因此可以使用新语法，但请谨慎使用新内置函数、新静态方法、新实例方法和其它新功能。如必须使用，请自行引入 babel-polyfill 垫片。  
+
