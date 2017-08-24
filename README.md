@@ -18,7 +18,7 @@ package.json 项目配置文件。
 
 建议以 package.json 文件的 scripts 节点作为命令行入口。  
 
-npm run check 检查 Git 分支名与 package.json 版本号是否一致。 
+npm run check 检查 Git 分支名与 package.json 版本号是否一致。  
 npm run lint 使用 ESLint 验证代码规范。  
 npm run clean 清理构建目录。  
 npm run server 启动本地静态服务器（开发环境）。  
