@@ -17,7 +17,7 @@ setTimeout(function () {
 }, 1000);
 
 
-loginDialog.init({
+loginDialog.init(undefined, {
   destroyCb: () => {
     setTimeout(() => {
       loginDialog.destroy();
