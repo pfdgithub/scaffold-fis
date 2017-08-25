@@ -114,9 +114,9 @@ util.parseUrl = function (url) {
       }
       return ret;
     })(),
-    file: (a.pathname.match(/\/([^\/?#]+)$/i) || ['', ''])[1],
-    path: a.pathname.replace(/^([^\/])/, '/$1'),
-    relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || ['', ''])[1],
+    file: (a.pathname.match(/\/([^/?#]+)$/i) || ['', ''])[1],
+    path: a.pathname.replace(/^([^/])/, '/$1'),
+    relative: (a.href.match(/tps?:\/\/[^/]+(.+)/) || ['', ''])[1],
     segments: a.pathname.replace(/^\//, '').split('/')
   };
 };
@@ -194,7 +194,7 @@ util.isMobile = function (mobile) {
 
 // 检验邮箱
 util.isEmail = function (email) {
-  let reg = /^[\.\w-]+@[\w-]+(\.[\w-]+)+$/;
+  let reg = /^[.\w-]+@[\w-]+(\.[\w-]+)+$/;
   return reg.test(email);
 };
 
@@ -330,7 +330,7 @@ util.thousandSeparator = function (number, len) {
   }
 
   if (strNum) {
-    let match = strNum.match(/^(\-)?(\d+)(\.\d+)?$/);
+    let match = strNum.match(/^(-)?(\d+)(\.\d+)?$/);
     if (match) {
       let symbol = match[1] ? match[1] : '';
       let integer = match[2] ? match[2] : '';
@@ -439,14 +439,14 @@ util.inspectUndefined = function (parentObj, keys) {
 
 // Object.assign
 util.objectAssign = function (target) {
-  if (target == null) {
+  if (target === null) {
     throw new TypeError('Cannot convert undefined or null to object');
   }
 
   target = Object(target);
   for (let index = 1; index < arguments.length; index++) {
     let source = arguments[index];
-    if (source != null) {
+    if (source !== null) {
       for (let key in source) {
         if (Object.prototype.hasOwnProperty.call(source, key)) {
           target[key] = source[key];
