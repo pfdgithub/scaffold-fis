@@ -26,13 +26,13 @@ let defineParam = {
 
 // 依赖打包
 let depsPack = {
-  useTrack: false, // 将合并前的文件路径写入注释中
+  useTrack: true, // 将合并前的文件路径写入注释中
   useSourceMap: true, // 开启 souremap 功能
-  'pkg/common.js': [ // 公共脚本
+  'pkg/js/common.js': [ // 公共脚本
     '/js/common/**.js',
     '/js/common/**.js:deps'
   ],
-  'pkg/common.css': [ // 公共样式
+  'pkg/css/common.css': [ // 公共样式
     '/css/common/**.css',
     '/css/common/**.css:deps',
     '/css/common/**.less',
@@ -53,9 +53,6 @@ fis.match('**', {
   query: '', // url 后追加查询字符串
   useHash: true // 使用 MD5 文件名
 })
-  .match('{/mock/**,/html/part/**}', { // 模拟数据和 html 片段不发布
-    release: false
-  })
   .match('{/lib/**,/html/**.html}', { // 第三方库和 html 文件不使用 MD5 文件名
     useHash: false
   })
@@ -101,7 +98,12 @@ fis.match('**', {
     postpackager: fis.plugin('loader', { // 分析处理页面依赖资源
       obtainScript: false, // 忽略页面中已存在的脚本
       obtainStyle: false, // 忽略页面中已存在的样式
-      useInlineMap: true // 在页面中输出 mod.js 异步依赖配置
+      useInlineMap: false, // 将资源映射表打包为单独文件
+      resourceType: 'mod', // 配置 mod.js 资源映射表
+      allInOne: {
+        useTrack: true, // 将合并前的文件路径写入注释中
+        sourceMap: true // 开启 souremap 功能
+      }
     })
   });
 
@@ -111,9 +113,6 @@ fis.media('dev')
     domain: assetPath.dev.domain,
     url: assetPath.dev.url,
     useHash: false
-  })
-  .match('/mock/**', { // 发布模拟数据
-    release: true
   });
 
 // 测试环境配置 和 生产环境配置
@@ -134,12 +133,12 @@ fis.media('dev')
         minifyCSS: true
       })
     })
-    .match('{/js/**.js,/component/**.vue}', { // 压缩脚本
+    .match('{/js/**.js,/component/**.js,/component/**.vue,/component/**.vue:js}', { // 压缩脚本
       optimizer: fis.plugin('uglify-js', {
-        sourceMap: true
+        sourceMap: true // 开启 souremap 功能
       })
     })
-    .match('{/css/**.css,/css/**.less}', { // 压缩样式
+    .match('{/css/**.css,/css/**.less,/component/**.vue:less}', { // 压缩样式
       optimizer: fis.plugin('clean-css', {
         keepBreaks: true
       })
