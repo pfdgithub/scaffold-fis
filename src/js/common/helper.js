@@ -129,13 +129,7 @@ helper.wxConfig = function (share, successCb, errorCb) {
             timestamp: data.data.timestamp,
             nonceStr: data.data.nonce,
             signature: data.data.signature,
-            jsApiList: [
-              'onMenuShareTimeline',
-              'onMenuShareAppMessage',
-              'onMenuShareQQ',
-              'onMenuShareWeibo',
-              'onMenuShareQZone'
-            ]
+            jsApiList: share.jsApiList
           });
           //验证成功
           wx.ready(function () {
@@ -178,6 +172,16 @@ helper.wxShareConfig = function (share, cbObj) {
   cbObj = cbObj ? cbObj : {};
 
   if (wx && share) {
+    // 需要使用的JS接口列表
+    let apiList = share.jsApiList;
+    share.jsApiList = (apiList ? apiList : []).concat([
+      'onMenuShareTimeline',
+      'onMenuShareAppMessage',
+      'onMenuShareQQ',
+      'onMenuShareWeibo',
+      'onMenuShareQZone'
+    ]);
+
     this.wxConfig(share, function () {
       //分享文案
       let shareData = {
