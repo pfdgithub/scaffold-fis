@@ -79,16 +79,16 @@ export default {
       background-position: center;
       background-repeat: no-repeat;
       &.success {
-        background-image: url(./assets/success.png);
+        background-image: url(./assets/success.png?__inline);
       }
       &.fail {
-        background-image: url(./assets/fail.png);
+        background-image: url(./assets/fail.png?__inline);
       }
       &.offline {
-        background-image: url(./assets/dislike.png);
+        background-image: url(./assets/dislike.png?__inline);
       }
       &.loading {
-        background-image: url(./assets/loading.png);
+        background-image: url(./assets/loading.png?__inline);
         animation: rotate 1s linear infinite;
       }
     }
