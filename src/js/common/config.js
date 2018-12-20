@@ -8,7 +8,7 @@ let query = util.parseQueryString();
 let envCfg = (function () {
   let config = {
     entryDir: util.guessEntryDir(),
-    origin: '//activity.weidai.com.cn/',
+    origin: '//activity.xxx.com.cn/',
     isMock: false,
     isDebug: false
   };
@@ -23,11 +23,11 @@ let envCfg = (function () {
       config.isDebug = true;
     } break;
     case 'test': {
-      config.origin = '//activity.wdai.com/';
+      config.origin = '//activity.xxx.com/';
       config.isDebug = true;
     } break;
     case 'prod': {
-      config.origin = '//activity.weidai.com.cn/';
+      config.origin = '//activity.xxx.com.cn/';
     } break;
   }
 
